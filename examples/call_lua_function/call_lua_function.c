@@ -4,22 +4,22 @@
 
 int main(int argc, char ** argv) {
 
-    lua_State *l = luaL_newstate();
-    luaL_openlibs(l);
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
 
-    if (luaL_loadfile(l, "script3.lua") == LUA_OK) {
-        if (lua_pcall(l, 0, 1, 0) == LUA_OK) {
-            lua_pop(l, lua_gettop(l));
+    if (luaL_loadfile(L, "script3.lua") == LUA_OK) {
+        if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
+            lua_pop(L, lua_gettop(L));
         }
     }
 
-    lua_getglobal(l, "my_function");
-    if (lua_isfunction(l, -1)) {
-        if (lua_pcall(l, 0, 1, 0) == LUA_OK) {
-            lua_pop(l, lua_gettop(l));
+    lua_getglobal(L, "my_function");
+    if (lua_isfunction(L, -1)) {
+        if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
+            lua_pop(L, lua_gettop(L));
         }
     }
 
-    lua_close(l);
+    lua_close(L);
     return 0;
 }

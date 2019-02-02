@@ -5,19 +5,19 @@
 
 // Define our function, we have to follow the protocol of lua_CFunction that is 
 // typedef int (*lua_CFunction) (lua_State *L);
-int multiplication(lua_State *l) {
+int multiplication(lua_State *L) {
 
     // Check first argument is integer and return the value
-    int a = luaL_checkinteger(l, 1);
+    int a = luaL_checkinteger(L, 1);
 
     // Check second argument is integer and return the value
-    int b = luaL_checkinteger(l, 2);
+    int b = luaL_checkinteger(L, 2);
     
     // multiply and store the result inside a type lua_Integer
     lua_Integer c = a * b;
 
     // push the result to Lua
-    lua_pushinteger(l, c);
+    lua_pushinteger(L, c);
 
     // exit code, successful = 1, otherwise error.
     return 1; // Successful
@@ -26,25 +26,25 @@ int multiplication(lua_State *l) {
 
 int main(int argc, char ** argv) {
 
-    lua_State *l = luaL_newstate();
-    luaL_openlibs(l);
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
 
     // Push the pointer to function
-    lua_pushcfunction(l, multiplication);
+    lua_pushcfunction(L, multiplication);
 
     // Get the value on top of the stack
     // and set as a global, in this case is the function
-    lua_setglobal(l, "mul");
+    lua_setglobal(L, "mul");
     
     // we can use the function `mul` inside the Lua code
     char * code = "print(mul(7, 8))";
 
-    if (luaL_loadstring(l, code) == LUA_OK) {
-        if (lua_pcall(l, 0, 1, 0) == LUA_OK) {
-            lua_pop(l, lua_gettop(l));
+    if (luaL_loadstring(L, code) == LUA_OK) {
+        if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
+            lua_pop(L, lua_gettop(L));
         }
     }
 
-    lua_close(l);
+    lua_close(L);
     return 0;
 }

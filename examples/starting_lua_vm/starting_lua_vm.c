@@ -5,11 +5,11 @@
 
 int main(int argc, char ** argv) {
 
-    lua_State *l = luaL_newstate();
-    luaL_openlibs(l);
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
 
     // Work with lua API
 
-    lua_close(l);
+    lua_close(L);
     return 0;
 }
