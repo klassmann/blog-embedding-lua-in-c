@@ -39,10 +39,8 @@ int main(int argc, char ** argv) {
     // we can use the function `mul` inside the Lua code
     char * code = "print(mul(7, 8))";
 
-    if (luaL_loadstring(L, code) == LUA_OK) {
-        if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
-            lua_pop(L, lua_gettop(L));
-        }
+    if (luaL_dostring(L, code) == LUA_OK) {
+        lua_pop(L, lua_gettop(L));
     }
 
     lua_close(L);

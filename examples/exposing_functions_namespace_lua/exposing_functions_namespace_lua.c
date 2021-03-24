@@ -18,7 +18,7 @@ int main(int argc, char ** argv) {
 
     // First we need to define an array with
     // all functions that will be available inside our namespace 
-    static const struct luaL_Reg MyMathLib[] = {
+    const struct luaL_Reg MyMathLib[] = {
         { "mul", multiplication }
     };
 
@@ -27,7 +27,7 @@ int main(int argc, char ** argv) {
 
     // Here we set all functions from MyMathLib array into
     // the table on the top of the stack
-    luaL_setfuncs(L, MyMathLib, 0);
+    luaL_setfuncs(L, &MyMathLib, 0);
 
     // We get the table and set as global variable
     lua_setglobal(L, "MyMath");
@@ -35,10 +35,8 @@ int main(int argc, char ** argv) {
     // Now we can call from Lua using the namespace MyMath
     char * code = "print(MyMath.mul(7, 8))";
 
-    if (luaL_loadstring(L, code) == LUA_OK) {
-        if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
-            lua_pop(L, lua_gettop(L));
-        }
+    if (luaL_dostring(L, code) == LUA_OK) {
+        lua_pop(L, lua_gettop(L));
     }
 
     lua_close(L);
