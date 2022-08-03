@@ -16,11 +16,14 @@ int multiplication(lua_State *L) {
     // multiply and store the result inside a type lua_Integer
     lua_Integer c = a * b;
 
-    // push the result to Lua
+    // Here we prepare the values to be returned.
+    // First we push the values we want to return onto the stack in direct order.
+    // Second, we must return the number of values pushed onto the stack.
+
+    // Pushing the result onto the stack to be returned
     lua_pushinteger(L, c);
 
-    // exit code, successful = 1, otherwise error.
-    return 1; // Successful
+    return 1; // The number of returned values
 }
 
 
